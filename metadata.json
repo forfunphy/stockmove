@@ -1,0 +1,5 @@
+{
+  "name": "個股K線圖動態（正式版）",
+  "description": "Interactive historical backtesting tool for the Taiwan Stock Exchange Weighted Index using dynamic candlestick visualization and customizable strategies.",
+  "requestFramePermissions": []
+}
