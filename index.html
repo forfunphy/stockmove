@@ -1,23 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Taiex Backtester Pro</title>
+    <title>台股回測 Pro</title>
+    <!-- Tailwind CSS (CDN for quick setup without build step configuration) -->
     <script src="https://cdn.tailwindcss.com"></script>
-  <script type="importmap">
-{
-  "imports": {
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
-    "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
-    "react/": "https://aistudiocdn.com/react@^19.2.1/",
-    "react": "https://aistudiocdn.com/react@^19.2.1"
-  }
-}
-</script>
-</head>
+  </head>
   <body class="bg-gray-900 text-gray-100">
     <div id="root"></div>
+    <!-- Entry Point -->
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>
