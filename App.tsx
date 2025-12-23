@@ -102,6 +102,7 @@ const App: React.FC = () => {
           if (!response.ok) throw new Error(`無法讀取 ${file}`);
           return response.json();
         });
+        fetchRemoteData();
 
         setLoadingProgress('下載數據中 (約 220MB)...');
         const results = await Promise.all(promises);
