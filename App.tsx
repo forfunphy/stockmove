@@ -28,8 +28,7 @@ const calculateMovingAverages = (data: StockData[]): StockData[] => {
         const slice = array.slice(index - period + 1, index + 1);
         const sum = slice.reduce((acc, curr) => acc + curr.close, 0);
         const avg = sum / period;
-        // @ts-ignore - dynamic assignment
-        newItem[`ma${period}`] = avg;
+        (newItem as any)[`ma${period}`] = avg;
       }
     });
 
@@ -93,7 +92,9 @@ const App: React.FC = () => {
       setIsLoading(true);
       setLoadingProgress('初始化數據請求...');
 
-      const baseUrl = 'https://forfunphy.github.io/allstocke/';
+      // NOTE: Ensure these files exist in your public/ folder or the remote URL is correct.
+      // const baseUrl = './'; // Use this for local development if files are in public/
+      const baseUrl = 'https://forfunphy.github.io/allstick/';
       const files = ['data_part1.json', 'data_part2.json', 'data_part3.json', 'data_part4.json', 'data_part5.json'];
 
       try {
@@ -102,7 +103,7 @@ const App: React.FC = () => {
           if (!response.ok) throw new Error(`無法讀取 ${file}`);
           return response.json();
         });
-        fetchRemoteData();
+
 
         setLoadingProgress('下載數據中 (約 220MB)...');
         const results = await Promise.all(promises);
@@ -113,8 +114,11 @@ const App: React.FC = () => {
         const stockMap: Record<string, StockData[]> = {};
 
         allData.forEach((item: any) => {
-          // Basic mapping to ensure compatibility
-          const timestamp = new Date(item.date).getTime();
+          // Fix Timezone Issue: Replace '-' with '/' to ensure local time parsing across browsers
+          // or use explicit construction to match initializeSimulation
+          const dateStr = item.date.replace(/-/g, '/');
+          const timestamp = new Date(dateStr).getTime();
+
           if (!isNaN(timestamp)) {
             const code = item.code;
             if (!stockMap[code]) stockMap[code] = [];
@@ -124,7 +128,7 @@ const App: React.FC = () => {
               code: item.code,
               name: item.name,
               open: Number(item.open),
-              high: Number(item.hight || item.high), // Handle potential typo 'hight' from constants
+              high: Number(item.hight || item.high),
               low: Number(item.low),
               close: Number(item.close),
               volume: Number(item.volume),
