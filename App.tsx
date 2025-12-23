@@ -94,7 +94,8 @@ const App: React.FC = () => {
 
       // NOTE: Ensure these files exist in your public/ folder or the remote URL is correct.
       // const baseUrl = './'; // Use this for local development if files are in public/
-      const baseUrl = 'https://forfunphy.github.io/allstick/';
+      const baseUrl = './'; // using local public folder
+      // const baseUrl = import.meta.env.DEV ? '/data-proxy/' : 'https://forfunphy.github.io/allstick/';
       const files = ['data_part1.json', 'data_part2.json', 'data_part3.json', 'data_part4.json', 'data_part5.json'];
 
       try {
@@ -116,6 +117,7 @@ const App: React.FC = () => {
         allData.forEach((item: any) => {
           // Fix Timezone Issue: Replace '-' with '/' to ensure local time parsing across browsers
           // or use explicit construction to match initializeSimulation
+          if (!item || !item.date) return;
           const dateStr = item.date.replace(/-/g, '/');
           const timestamp = new Date(dateStr).getTime();
 
